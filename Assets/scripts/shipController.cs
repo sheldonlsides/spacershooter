@@ -83,7 +83,7 @@ public class @ShipController : IInputActionCollection, IDisposable
                 {
                     ""name"": ""negative"",
                     ""id"": ""274fd297-95e7-49ee-8fc3-d2683e0c6160"",
-                    ""path"": ""<SwitchProControllerHID>/leftStick/left"",
+                    ""path"": ""<Gamepad>/rightStick/left"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -94,7 +94,7 @@ public class @ShipController : IInputActionCollection, IDisposable
                 {
                     ""name"": ""positive"",
                     ""id"": ""10f9d202-d292-4f8f-8169-5a1fddc7e8f6"",
-                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""path"": ""<Gamepad>/rightStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -160,7 +160,7 @@ public class @ShipController : IInputActionCollection, IDisposable
                 {
                     ""name"": ""positive"",
                     ""id"": ""d480d65c-3324-4b8b-a993-bfed223934f5"",
-                    ""path"": ""<SwitchProControllerHID>/rightStick/down"",
+                    ""path"": ""<Gamepad>/rightStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
