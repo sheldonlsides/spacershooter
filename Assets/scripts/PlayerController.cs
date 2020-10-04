@@ -1,20 +1,25 @@
 ﻿using System;
 using UnityEngine;
-public class Ship : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     private ShipController shipController;
 
-    [SerializeField] private  float speed = 4f;
-    [SerializeField] private float xRange = 5f;
-    [SerializeField] private float yRange = 3f;
+    [Header("General")]
+    [SerializeField] float speed = 4f;
+    [SerializeField] float xRange = 2f;
+    [SerializeField] float yRange = 2f;
 
-    [SerializeField] private float positionPitchFactor = 2f;
-    [SerializeField] private float controlPitchFactor = -30f;
-    [SerializeField] private float positionYawFactor = -12f;
+    [Header("Screen Position")]
+    [SerializeField] float positionPitchFactor = 2f;
+    [SerializeField] float positionYawFactor = -12f;
+
+    [Header("Control Throw")]
+    [SerializeField] float controlPitchFactor = -30f;
     [SerializeField] float controlRollFactor = -20f;
 
-    [SerializeField] float xThrow = 0f;
-    [SerializeField] float yThrow = 0f;
+    float xThrow = 0f;
+    float yThrow = 0f;
+    private bool isFlightEnabled = true;
 
     private void Awake()
     {
@@ -34,9 +39,17 @@ public class Ship : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ProcesssTranslation();
-        ProcessRotation();
+        if (isFlightEnabled)
+        {
+            ProcesssTranslation();
+            ProcessRotation();
+        }
+    }
 
+    void OnPlayerDeath()
+    {
+        print("Flight controls stopped");
+        isFlightEnabled = false;
     }
 
     private void ProcessRotation()
@@ -57,8 +70,6 @@ public class Ship : MonoBehaviour
         float leftRightInput = shipController.Move.Roll.ReadValue<float>();
         float upDownnInput = shipController.Move.Pitch.ReadValue<float>();
 
-        print($"Moving {leftRightInput}");
-
         Vector3 currentPosition = transform.position;
 
         xThrow = shipController.Move.Roll.ReadValue<float>();
@@ -68,12 +79,10 @@ public class Ship : MonoBehaviour
         float yOffSet = yThrow * speed * Time.deltaTime;
 
         float rawXPos = transform.localPosition.x + xOffSet;
-        float clampedXPos = Mathf.Clamp(rawXPos, -5f, 5f);
+        float clampedXPos = Mathf.Clamp(rawXPos, -xRange, xRange);
 
         float rawYPos = transform.localPosition.y + yOffSet;
-        float clampedYPos = Mathf.Clamp(rawYPos, -4f, 4f);
-
-        //currentPosition.y += clampedYPos;
+        float clampedYPos = Mathf.Clamp(rawYPos, -yRange, yRange);
 
         transform.localPosition = new Vector3(clampedXPos, clampedYPos, transform.localPosition.z); ;
     }
