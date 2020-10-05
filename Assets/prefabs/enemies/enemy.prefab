@@ -28,7 +28,11 @@ Transform:
   m_GameObject: {fileID: 6849907865545156194}
   m_LocalRotation: {x: -0.02079238, y: -0.574597, z: -0.0018550868, w: 0.81817025}
   m_LocalPosition: {x: 29.1, y: -83.8, z: 118.1}
+<<<<<<< HEAD
   m_LocalScale: {x: 49.99999, y: 50, z: 50}
+=======
+  m_LocalScale: {x: 50, y: 50, z: 50}
+>>>>>>> e04bd8583c65fdd619b72c9a342d1bd30fb5bd44
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -97,6 +101,9 @@ MonoBehaviour:
   deathFX: {fileID: 3441128792870084082, guid: 16c860c39987e438282ceb22e2903eeb, type: 3}
   parent: {fileID: 0}
   scorePerHit: 100
+<<<<<<< HEAD
   hits: 3
   destroyed: {fileID: 8300000, guid: d39e4dd003cf540f387fe1a676edb6e8, type: 3}
   destroyedAudio: {fileID: 0}
+=======
+>>>>>>> e04bd8583c65fdd619b72c9a342d1bd30fb5bd44

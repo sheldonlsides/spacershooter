@@ -97,5 +97,8 @@ MonoBehaviour:
   deathFX: {fileID: 3441128792870084082, guid: 16c860c39987e438282ceb22e2903eeb, type: 3}
   parent: {fileID: 0}
   scorePerHit: 200
+<<<<<<< HEAD
   hits: 3
   destroyedAudio: {fileID: 0}
+=======
+>>>>>>> e04bd8583c65fdd619b72c9a342d1bd30fb5bd44
