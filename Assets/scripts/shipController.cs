@@ -169,6 +169,33 @@ public class @ShipController : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""Firing"",
+            ""id"": ""2a9616bf-bbd9-4b42-b3e1-f9bc6e89b3d6"",
+            ""actions"": [
+                {
+                    ""name"": ""Fire"",
+                    ""type"": ""Button"",
+                    ""id"": ""29cbb9de-9b6c-4c42-9b73-b12cb366f37b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""5468ca86-08dc-4c38-b193-d0a3a82a3b7c"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -177,6 +204,9 @@ public class @ShipController : IInputActionCollection, IDisposable
         m_Move = asset.FindActionMap("Move", throwIfNotFound: true);
         m_Move_Roll = m_Move.FindAction("Roll", throwIfNotFound: true);
         m_Move_Pitch = m_Move.FindAction("Pitch", throwIfNotFound: true);
+        // Firing
+        m_Firing = asset.FindActionMap("Firing", throwIfNotFound: true);
+        m_Firing_Fire = m_Firing.FindAction("Fire", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -263,9 +293,46 @@ public class @ShipController : IInputActionCollection, IDisposable
         }
     }
     public MoveActions @Move => new MoveActions(this);
+
+    // Firing
+    private readonly InputActionMap m_Firing;
+    private IFiringActions m_FiringActionsCallbackInterface;
+    private readonly InputAction m_Firing_Fire;
+    public struct FiringActions
+    {
+        private @ShipController m_Wrapper;
+        public FiringActions(@ShipController wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Fire => m_Wrapper.m_Firing_Fire;
+        public InputActionMap Get() { return m_Wrapper.m_Firing; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(FiringActions set) { return set.Get(); }
+        public void SetCallbacks(IFiringActions instance)
+        {
+            if (m_Wrapper.m_FiringActionsCallbackInterface != null)
+            {
+                @Fire.started -= m_Wrapper.m_FiringActionsCallbackInterface.OnFire;
+                @Fire.performed -= m_Wrapper.m_FiringActionsCallbackInterface.OnFire;
+                @Fire.canceled -= m_Wrapper.m_FiringActionsCallbackInterface.OnFire;
+            }
+            m_Wrapper.m_FiringActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Fire.started += instance.OnFire;
+                @Fire.performed += instance.OnFire;
+                @Fire.canceled += instance.OnFire;
+            }
+        }
+    }
+    public FiringActions @Firing => new FiringActions(this);
     public interface IMoveActions
     {
         void OnRoll(InputAction.CallbackContext context);
         void OnPitch(InputAction.CallbackContext context);
+    }
+    public interface IFiringActions
+    {
+        void OnFire(InputAction.CallbackContext context);
     }
 }

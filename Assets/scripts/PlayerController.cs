@@ -16,14 +16,19 @@ public class PlayerController : MonoBehaviour
     [Header("Control Throw")]
     [SerializeField] float controlPitchFactor = -30f;
     [SerializeField] float controlRollFactor = -20f;
-
+    [SerializeField] GameObject[] guns;
     float xThrow = 0f;
     float yThrow = 0f;
     private bool isFlightEnabled = true;
 
+    private float firingValue;
+
     private void Awake()
     {
         shipController = new ShipController();
+
+        shipController.Firing.Fire.performed += context => firingValue = context.ReadValue<float>();
+        shipController.Firing.Fire.canceled += context => firingValue = 0;
     }
 
     private void OnEnable()
@@ -43,6 +48,30 @@ public class PlayerController : MonoBehaviour
         {
             ProcesssTranslation();
             ProcessRotation();
+            processFiring();
+        }
+    }
+
+    private void processFiring()
+    {
+        if (firingValue > 0)
+        {
+            setGunsActive(true);
+        }
+
+        else if (firingValue <= 0)
+        {
+            setGunsActive(false);
+        }
+    }
+
+    private void setGunsActive(bool active)
+    {
+        foreach (GameObject gun in guns)
+        {
+           //gun.SetActive(active);
+           var  particleSystem = gun.GetComponent<ParticleSystem>().emission;
+           particleSystem.enabled = active;
         }
     }
 
@@ -71,7 +100,7 @@ public class PlayerController : MonoBehaviour
         float upDownnInput = shipController.Move.Pitch.ReadValue<float>();
 
         Vector3 currentPosition = transform.position;
-
+        
         xThrow = shipController.Move.Roll.ReadValue<float>();
         yThrow = shipController.Move.Pitch.ReadValue<float>();
 

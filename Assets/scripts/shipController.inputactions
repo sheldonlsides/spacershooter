@@ -156,6 +156,33 @@
                     "isPartOfComposite": true
                 }
             ]
+        },
+        {
+            "name": "Firing",
+            "id": "2a9616bf-bbd9-4b42-b3e1-f9bc6e89b3d6",
+            "actions": [
+                {
+                    "name": "Fire",
+                    "type": "Button",
+                    "id": "29cbb9de-9b6c-4c42-9b73-b12cb366f37b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "5468ca86-08dc-4c38-b193-d0a3a82a3b7c",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
